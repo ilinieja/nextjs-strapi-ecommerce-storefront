@@ -19,9 +19,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="min-h-screen min-w-screen">
-      <body className={clsx(inter.className, "h-full w-full flex flex-col justify-center px-6 md:px-12 lg:px-20")}>
+      <body className={clsx(inter.className, "h-full w-full flex flex-col justify-center items-center px-6 md:px-12 lg:px-20")}>
         <Header className="sticky top-0 w-full"></Header>
-        {children}
+        <main className="w-full max-w-7xl">
+          {children}
+        </main>
       </body>
     </html>
   )

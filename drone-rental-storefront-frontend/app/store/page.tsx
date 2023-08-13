@@ -1,3 +1,9 @@
+import Banner from "@/components/Banner/Banner";
+
 export default function Store() {
-    return <div>store</div>;
+  return (
+    <article className="flex flex-col">
+      <Banner className="pt-12 lg:pt-24" />
+    </article>
+  );
 }

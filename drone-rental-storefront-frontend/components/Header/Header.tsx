@@ -1,8 +1,8 @@
 import Link from "next/link";
 import clsx from "clsx";
 
-import SvgIconDrone from "./icons/SvgIconsDrone";
-import SvgIconCart from "./icons/SvgIconCart";
+import SvgIconDrone from "../icons/SvgIconsDrone";
+import SvgIconCart from "../icons/SvgIconCart";
 
 const links = [
   {
