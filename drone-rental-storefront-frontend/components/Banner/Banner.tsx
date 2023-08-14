@@ -8,7 +8,7 @@ export default function Banner({ className }: { className?: string }) {
     <section
       className={clsx(
         className,
-        "grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12"
+        "grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12 px-8 md:px-0"
       )}
     >
       <div className="md:col-start-2 lg:col-start-2 xl:col-start-2 col-span-4 lg:col-span-5 xl:col-span-4">

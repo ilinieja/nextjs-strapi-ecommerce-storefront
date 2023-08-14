@@ -21,9 +21,9 @@ const links = [
 
 export default function Header({ className }: { className?: string }) {
   return (
-    <header className={clsx(className, "flex justify-center items-center")}>
-      <div className="max-w-7xl w-full py-4 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
-        <div className="col-span-1 flex items-center justify-start">
+    <header className={clsx(className, "flex justify-center items-center border-b border-current")}>
+      <div className="max-w-7xl w-full py-8 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
+        <div className="col-span-1 flex items-center justify-center">
           <Link href="/">
             <SvgIconDrone height="2rem" width="2rem" />
           </Link>
@@ -33,7 +33,7 @@ export default function Header({ className }: { className?: string }) {
             <Link className="text-lg" href={href}>{title}</Link>
           ))}
         </nav>
-        <div className="col-span-1 flex items-center justify-end">
+        <div className="col-span-1 flex items-center justify-center">
           <Link href="/cart">
             <SvgIconCart height="2rem" width="2rem"/>
           </Link>

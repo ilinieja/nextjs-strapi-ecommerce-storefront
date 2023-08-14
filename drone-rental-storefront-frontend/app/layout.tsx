@@ -18,8 +18,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="min-h-screen min-w-screen">
-      <body className={clsx(inter.className, "h-full w-full flex flex-col justify-center items-center px-6 md:px-12 lg:px-20")}>
+    <html lang="en" className="min-h-screen min-w-screen bg-light dark:bg-dark text-dark dark:text-light">
+      <body className={clsx(inter.className, "h-full w-full flex flex-col justify-center items-center")}>
         <Header className="sticky top-0 w-full"></Header>
         <main className="w-full max-w-7xl">
           {children}
