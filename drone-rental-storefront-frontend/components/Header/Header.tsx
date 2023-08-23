@@ -21,7 +21,7 @@ const links = [
 
 export default function Header({ className }: { className?: string }) {
   return (
-    <header className={clsx(className, "flex justify-center items-center border-b border-current")}>
+    <header className={clsx(className, "flex justify-center items-center border-b border-current backdrop-blur-md z-20 bg-light/70 dark:bg-dark/70")}>
       <div className="max-w-7xl w-full py-8 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
         <div className="col-span-1 flex items-center justify-center">
           <Link href="/">

@@ -47,7 +47,7 @@ const fetcher = async <T>({
 };
 
 const cmsFetcher = async <T>(props: FetcherProps<T>) => {
-  const url = `${process.env.CMS_URL}${props.url}`;
+  const url = `${process.env.CMS_URL}/${props.url}`;
 
   return fetcher({
     ...props,
@@ -57,6 +57,10 @@ const cmsFetcher = async <T>(props: FetcherProps<T>) => {
     },
   });
 };
+
+export const addFileStoragePrefix = (filePath: string) => {
+    return `${process.env.CMS_URL}${filePath}`
+}
 
 export const getProducts = async () => {
   return cmsFetcher<Product[]>({
