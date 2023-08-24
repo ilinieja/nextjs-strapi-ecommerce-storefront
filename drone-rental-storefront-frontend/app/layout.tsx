@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import clsx from 'clsx'
 
 import Header from '@/components/Header/Header'
+import { CartContextProvider } from '@/context/cart.context'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,10 +21,12 @@ export default function RootLayout({
   return (
     <html lang="en" className="min-h-screen min-w-screen bg-light dark:bg-dark text-dark dark:text-light">
       <body className={clsx(inter.className, "h-full w-full flex flex-col justify-center items-center")}>
-        <Header className="sticky top-0 w-full"></Header>
-        <main className="w-full max-w-7xl">
-          {children}
-        </main>
+        <CartContextProvider>
+          <Header className="sticky top-0 w-full"></Header>
+          <main className="w-full max-w-7xl">
+            {children}
+          </main>
+        </CartContextProvider>
       </body>
     </html>
   )

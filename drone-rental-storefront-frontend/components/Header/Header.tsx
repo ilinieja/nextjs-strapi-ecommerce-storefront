@@ -2,7 +2,7 @@ import Link from "next/link";
 import clsx from "clsx";
 
 import SvgIconDrone from "../icons/SvgIconsDrone";
-import SvgIconCart from "../icons/SvgIconCart";
+import CartIcon from "../CartIcon/CartIcon";
 
 const links = [
   {
@@ -34,9 +34,7 @@ export default function Header({ className }: { className?: string }) {
           ))}
         </nav>
         <div className="col-span-1 flex items-center justify-center">
-          <Link href="/cart">
-            <SvgIconCart height="2rem" width="2rem"/>
-          </Link>
+          <CartIcon />
         </div>
       </div>
     </header>

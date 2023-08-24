@@ -4,6 +4,8 @@ import clsx from "clsx";
 import { Product } from "@/lib/types";
 import { addFileStoragePrefix } from "@/lib/api";
 
+import ProductOrderControls from "./ProductOrderControls";
+
 export default function Product({
   product,
   className,
@@ -25,9 +27,13 @@ export default function Product({
         alt={product?.attributes?.name?.toString()}
       />
       <h2 className="text-2xl mb-4">{product?.attributes?.name?.toString()}</h2>
-      <p className="whitespace-pre-line text-center">
+      <p className="whitespace-pre-line text-center mb-8">
         {product?.attributes?.description?.toString()}
       </p>
+
+      <div className="flex flex-col w-full mt-auto">
+        <ProductOrderControls product={product} />
+      </div>
     </div>
   );
 }
