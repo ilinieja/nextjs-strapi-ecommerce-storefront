@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, createContext, useReducer } from "react";
+import React, { Dispatch, createContext } from "react";
 import { useImmerReducer } from "use-immer";
 
 import { Product } from "@/lib/types";

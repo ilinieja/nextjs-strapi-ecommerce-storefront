@@ -5,6 +5,7 @@ import { Product } from "@/lib/types";
 import { CartContext } from "@/context/cart.context";
 import Button from "@/components/Button/Button";
 import SvgCartIcon from "@/components/icons/SvgIconCartMini";
+import DatePicker from "@/components/DatePicker/DatePicker";
 
 export default function ProductOrderControls({
   product,
@@ -18,7 +19,10 @@ export default function ProductOrderControls({
   };
 
   return (
-    <div className="flex flex-col w-full mt-auto">
+    <div className="flex flex-col w-full mt-auto gap-4">
+      <div className="flex w-full">
+        <DatePicker />
+      </div>
       <Button onClick={handleAddToCartClick}>
         <SvgCartIcon />
         <span>Add to cart</span>
