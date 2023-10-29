@@ -1,0 +1,20 @@
+/* react-day-picker overrides */
+.day {
+    margin: 2px 0;
+}
+
+.day:hover {
+    @apply bg-dark text-light;
+    @apply dark:bg-light dark:text-dark;
+}
+
+.day_range_start,
+.day_range_end,
+.day_range_middle {
+    @apply bg-dark text-light;
+    @apply dark:bg-light dark:text-dark;
+}
+
+.day_outside {
+    opacity: 0.75;
+}
