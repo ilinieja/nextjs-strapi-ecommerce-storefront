@@ -17,7 +17,7 @@ export default function Product({
     <div
       className={clsx(
         className,
-        "flex flex-col items-center p-8 border rounded border-dark/30 dark:border-light/30"
+        "flex flex-col items-center p-4 lg:p-8 border rounded border-dark/30 dark:border-light/30"
       )}
     >
       <Image

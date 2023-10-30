@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Popover } from "@headlessui/react";
 import { cva } from "class-variance-authority";
 import clsx from "clsx";
-import { DateRange, DayPicker } from "react-day-picker";
+import { DateRange as DayPickerDateRange, DayPicker } from "react-day-picker";
 import { usePopper } from "react-popper";
 
 import defaultDatepickerStyles from "react-day-picker/dist/style.module.css";
@@ -39,7 +39,7 @@ const popoverButtonClasses = cva(
     "flex",
     "gap-4",
     "items-center",
-    "justify-between"
+    "justify-between",
   ],
   {
     variants: {
@@ -92,21 +92,57 @@ const popoverPanelClasses = cva(
   }
 );
 
-export default function DatePicker() {
+function isValidDateRange(
+  dateRange: DayPickerDateRange | undefined
+): dateRange is DateRange {
+  return !!dateRange && !!dateRange.from && !!dateRange.to;
+}
+
+export type DateRange = {
+  from: Date;
+  to: Date;
+};
+
+export interface DatePickerProps {
+  onDateRangeSelect: (dateRange: DateRange) => void;
+  selectedDateRange?: DayPickerDateRange;
+  className?: string;
+}
+
+export default function DatePicker({
+  onDateRangeSelect,
+  selectedDateRange,
+  className,
+}: DatePickerProps) {
   let [referenceElement, setReferenceElement] = useState<HTMLElement | null>();
   let [popperElement, setPopperElement] = useState<HTMLElement | null>();
 
-  const [selectedRange, setSelectedRange] = useState<DateRange|undefined>({
-    from: add(new Date(), { days: 2 }),
-    to: add(new Date(), { days: 9 }),
-  });
+  const [selectedRange, setSelectedRange] = useState<
+    DayPickerDateRange | undefined
+  >(
+    selectedDateRange ?? {
+      from: add(new Date(), { days: 2 }),
+      to: add(new Date(), { days: 9 }),
+    }
+  );
 
-  const formatDateRange = (dateRange: DateRange | undefined) => {
+  const handleRangeSelect = (dateRange: DayPickerDateRange | undefined) => {
+    setSelectedRange(dateRange);
+
+    if (isValidDateRange(dateRange)) {
+      onDateRangeSelect(dateRange);
+    }
+  };
+
+  const formatDateRange = (dateRange: DayPickerDateRange | undefined) => {
     if (!dateRange || !dateRange.from || !dateRange.to) {
-      return 'Select dates';
+      return "Select dates";
     }
 
-    return `${format(dateRange.from!, "d MMM")} - ${format(dateRange.to!, "d MMM")}`;
+    return `${format(dateRange.from!, "d MMM")} - ${format(
+      dateRange.to!,
+      "d MMM"
+    )}`;
   };
 
   let { styles: popperStyles, attributes } = usePopper(
@@ -134,6 +170,7 @@ export default function DatePicker() {
           <Popover.Button
             ref={setReferenceElement}
             className={clsx(
+              className,
               popoverButtonClasses({
                 intent: open ? "primary-active" : "primary",
               })
@@ -158,7 +195,7 @@ export default function DatePicker() {
               weekStartsOn={1}
               mode="range"
               selected={selectedRange}
-              onSelect={setSelectedRange}
+              onSelect={handleRangeSelect}
               disabled={{ before: new Date() }}
             />
           </Popover.Panel>

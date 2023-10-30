@@ -5,13 +5,17 @@ import { useImmerReducer } from "use-immer";
 
 import { Product } from "@/lib/types";
 
+interface CartProduct extends Product {
+  dateRange: { from: Date; to: Date };
+}
+
 type CartState = {
-  products: Product[];
+  products: CartProduct[];
 };
 
 type CartAction = {
   type: string;
-  product: Product;
+  product: CartProduct;
 };
 
 const initialState: CartState = {
@@ -24,7 +28,7 @@ const reducer = (state: CartState, action: CartAction) => {
       state.products.push(action.product);
       break;
     case "REMOVE_PRODUCT":
-      state.products.filter(({id}) => id !== action.product.id);
+      state.products.filter(({ id }) => id !== action.product.id);
       break;
     case "RESET":
       return initialState;
