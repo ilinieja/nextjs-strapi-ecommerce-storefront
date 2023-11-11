@@ -5,7 +5,7 @@ import { Product } from "@/lib/types";
 import { CartContext } from "@/context/cart.context";
 import Button from "@/components/Button/Button";
 import SvgCartIcon from "@/components/icons/SvgIconCartMini";
-import DatePicker, { DateRange } from "@/components/DatePicker/DatePicker";
+import DatePicker, { PartialDateRange, isCompleteDateRange } from "@/components/DatePicker/DatePicker";
 import { add } from "date-fns";
 import ProductPrice from "./ProductPrice";
 
@@ -14,7 +14,7 @@ export default function ProductOrderControls({
 }: {
   product: Product;
 }) {
-  const [dateRange, setDateRange] = useState<DateRange>({
+  const [dateRange, setDateRange] = useState<PartialDateRange>({
     from: add(new Date(), { days: 2 }),
     to: add(new Date(), { days: 9 }),
   });
@@ -22,6 +22,11 @@ export default function ProductOrderControls({
   const { dispatch } = useContext(CartContext);
 
   const handleAddToCartClick = () => {
+    if (!isCompleteDateRange(dateRange)) {
+      // TODO: Show date-range-invalid error.
+      return;
+    }
+
     dispatch({ type: "ADD_PRODUCT", product: { ...product, dateRange } });
   };
 

@@ -11,6 +11,7 @@ import defaultDatepickerStyles from "react-day-picker/dist/style.module.css";
 import styles from "./DatePicker.module.css";
 import SvgIconCalendar from "../icons/SvgIconCalendar";
 import { add, format } from "date-fns";
+import Button from "../Button/Button";
 const applyLocalStyle = (className: keyof typeof defaultDatepickerStyles) => ({
   [className]: clsx(defaultDatepickerStyles[className], styles[className]),
 });
@@ -75,10 +76,12 @@ const popoverPanelClasses = cva(
     "border",
     "border-dark/30",
     "dark:border-light/30",
-    "px-4",
-    "py-2",
+    "px-2",
+    "pt-2",
     "bg-light",
     "dark:bg-dark",
+    "flex",
+    "flex-col",
   ],
   {
     variants: {
@@ -92,26 +95,33 @@ const popoverPanelClasses = cva(
   }
 );
 
-function isValidDateRange(
+export function isCompleteDateRange(
   dateRange: DayPickerDateRange | undefined
-): dateRange is DateRange {
+): dateRange is CompleteDateRange {
   return !!dateRange && !!dateRange.from && !!dateRange.to;
 }
 
-export type DateRange = {
+export type CompleteDateRange = {
   from: Date;
   to: Date;
 };
 
+export type PartialDateRange = DayPickerDateRange | undefined;
+
 export interface DatePickerProps {
-  onDateRangeSelect: (dateRange: DateRange) => void;
+  onDateRangeSelect: (dateRange: DayPickerDateRange | undefined) => void;
   selectedDateRange?: DayPickerDateRange;
+  defaultDateRange?: CompleteDateRange;
   className?: string;
 }
 
 export default function DatePicker({
   onDateRangeSelect,
   selectedDateRange,
+  defaultDateRange = {
+    from: add(new Date(), { days: 2 }),
+    to: add(new Date(), { days: 9 }),
+  },
   className,
 }: DatePickerProps) {
   let [referenceElement, setReferenceElement] = useState<HTMLElement | null>();
@@ -119,19 +129,15 @@ export default function DatePicker({
 
   const [selectedRange, setSelectedRange] = useState<
     DayPickerDateRange | undefined
-  >(
-    selectedDateRange ?? {
-      from: add(new Date(), { days: 2 }),
-      to: add(new Date(), { days: 9 }),
-    }
-  );
+  >(selectedDateRange ?? defaultDateRange);
 
   const handleRangeSelect = (dateRange: DayPickerDateRange | undefined) => {
     setSelectedRange(dateRange);
+    onDateRangeSelect(dateRange);
+  };
 
-    if (isValidDateRange(dateRange)) {
-      onDateRangeSelect(dateRange);
-    }
+  const handleRangeClear = () => {
+    handleRangeSelect(undefined);
   };
 
   const formatDateRange = (dateRange: DayPickerDateRange | undefined) => {
@@ -188,16 +194,25 @@ export default function DatePicker({
             style={popperStyles.popper}
             {...attributes.popper}
           >
-            <DayPicker
-              classNames={datePickerStyles}
-              showOutsideDays
-              fixedWeeks
-              weekStartsOn={1}
-              mode="range"
-              selected={selectedRange}
-              onSelect={handleRangeSelect}
-              disabled={{ before: new Date() }}
-            />
+            {({ close: closePopover }) => (
+              <DayPicker
+                classNames={datePickerStyles}
+                showOutsideDays
+                fixedWeeks
+                weekStartsOn={1}
+                mode="range"
+                selected={selectedRange}
+                onSelect={handleRangeSelect}
+                disabled={{ before: new Date() }}
+                min={2}
+                footer={
+                  <div className="w-full flex mt-4 justify-end gap-2">
+                    <Button onClick={handleRangeClear}>Clear</Button>
+                    <Button onClick={() => closePopover()}>Save</Button>
+                  </div>
+                }
+              />
+            )}
           </Popover.Panel>
         </>
       )}

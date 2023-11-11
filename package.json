@@ -1,0 +1,11 @@
+{
+  "name": "drone-rental-storefront",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run dev --prefix drone-rental-storefront-frontend & npm run develop --prefix drone-rental-storefront-cms"
+  },
+  "author": "",
+  "license": "ISC"
+}

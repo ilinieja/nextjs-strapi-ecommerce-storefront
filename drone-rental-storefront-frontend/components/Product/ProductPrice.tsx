@@ -1,5 +1,5 @@
 import { differenceInDays } from "date-fns";
-import { DateRange } from "../DatePicker/DatePicker";
+import { PartialDateRange, isCompleteDateRange } from "../DatePicker/DatePicker";
 import numeral from "numeral";
 import clsx from "clsx";
 
@@ -14,12 +14,12 @@ export default function ProductPrice({
   currency,
   className,
 }: {
-  dateRange: DateRange;
+  dateRange: PartialDateRange;
   price: number;
   currency: string;
   className?: string;
 }) {
-  const days = differenceInDays(dateRange.to, dateRange.from);
+  const days = isCompleteDateRange(dateRange) ? differenceInDays(dateRange.to, dateRange.from) : 0;
   const totalPrice = numeral(price * days).format("0.[00]a");
   const currencySymbol =
     currencySymbolMap[currency as keyof typeof currencySymbolMap] ?? "";
