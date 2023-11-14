@@ -2,22 +2,31 @@
 import { useContext, useState } from "react";
 
 import { Product } from "@/lib/types";
-import { CartContext } from "@/context/cart.context";
+import {
+  AddedCartProduct,
+  CartContext,
+  isAddedCartProduct,
+} from "@/context/cart.context";
 import Button from "@/components/Button/Button";
 import SvgCartIcon from "@/components/icons/SvgIconCartMini";
-import DatePicker, { PartialDateRange, isCompleteDateRange } from "@/components/DatePicker/DatePicker";
+import DatePicker, {
+  PartialDateRange,
+  isCompleteDateRange,
+} from "@/components/DatePicker/DatePicker";
 import { add } from "date-fns";
 import ProductPrice from "./ProductPrice";
 
 export default function ProductOrderControls({
   product,
 }: {
-  product: Product;
+  product: Product | AddedCartProduct;
 }) {
-  const [dateRange, setDateRange] = useState<PartialDateRange>({
-    from: add(new Date(), { days: 2 }),
-    to: add(new Date(), { days: 9 }),
-  });
+  const [dateRange, setDateRange] = useState<PartialDateRange>(
+    (product as AddedCartProduct).dateRange ?? {
+      from: add(new Date(), { days: 2 }),
+      to: add(new Date(), { days: 9 }),
+    }
+  );
 
   const { dispatch } = useContext(CartContext);
 
@@ -29,6 +38,30 @@ export default function ProductOrderControls({
 
     dispatch({ type: "ADD_PRODUCT", product: { ...product, dateRange } });
   };
+
+  const handleRemoveFromCartClick = () => {
+    if (!isAddedCartProduct(product)) {
+      // TODO: Log product-not-in-cart warning.
+      return;
+    }
+
+    dispatch({
+      type: "REMOVE_PRODUCT",
+      product,
+    });
+  };
+
+  const button = isAddedCartProduct(product) ? (
+    <Button onClick={handleRemoveFromCartClick}>
+      <SvgCartIcon />
+      <span>Remove from cart</span>
+    </Button>
+  ) : (
+    <Button onClick={handleAddToCartClick}>
+      <SvgCartIcon />
+      <span>Add to cart</span>
+    </Button>
+  );
 
   return (
     <div className="flex flex-col w-full mt-auto gap-4">
@@ -45,10 +78,7 @@ export default function ProductOrderControls({
           currency={product?.attributes?.priceCurrency?.toString()}
         />
       </div>
-      <Button onClick={handleAddToCartClick}>
-        <SvgCartIcon />
-        <span>Add to cart</span>
-      </Button>
+      {button}
     </div>
   );
 }

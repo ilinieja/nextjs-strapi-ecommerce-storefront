@@ -4,8 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm run dev --prefix drone-rental-storefront-frontend & npm run develop --prefix drone-rental-storefront-cms"
+    "dev": "concurrently \"npm run dev --prefix drone-rental-storefront-frontend\"  \"npm run develop --prefix drone-rental-storefront-cms\""
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
 }

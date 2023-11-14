@@ -2,16 +2,19 @@ import Image from "next/image";
 import clsx from "clsx";
 
 import { Product } from "@/lib/types";
-import { addFileStoragePrefix } from "@/lib/api";
 
 import ProductOrderControls from "./ProductOrderControls";
+
+const addFileStoragePrefix = (filePath: string) => {
+  return `${process.env.NEXT_PUBLIC_CMS_URL}${filePath}`
+}
 
 export default function Product({
   product,
   className,
 }: {
   product: Product;
-  className: string;
+  className?: string;
 }) {
   return (
     <div

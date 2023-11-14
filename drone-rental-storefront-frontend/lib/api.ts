@@ -60,10 +60,6 @@ const cmsFetcher = async <T>(props: FetcherProps<T>) => {
   });
 };
 
-export const addFileStoragePrefix = (filePath: string) => {
-    return `${process.env.CMS_URL}${filePath}`
-}
-
 export const getProducts = async () => {
   return cmsFetcher<Product[]>({
     url: "api/products?populate=mainImage",

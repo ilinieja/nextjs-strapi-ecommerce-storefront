@@ -2,21 +2,37 @@
 
 import React, { Dispatch, createContext } from "react";
 import { useImmerReducer } from "use-immer";
+import { v4 as uuidv4 } from 'uuid';
 
 import { Product } from "@/lib/types";
 
-interface CartProduct extends Product {
+export interface CartProduct extends Product {
   dateRange: { from: Date; to: Date };
 }
 
+export interface AddedCartProduct extends CartProduct {
+  cartId: string;
+}
+
+export function isAddedCartProduct(product: Product): product is AddedCartProduct {
+  return !!(product as AddedCartProduct).cartId;
+}
+
 type CartState = {
-  products: CartProduct[];
+  products: AddedCartProduct[];
 };
 
-type CartAction = {
-  type: string;
+type CartAddAction = {
+  type: "ADD_PRODUCT";
   product: CartProduct;
 };
+
+type CartRemoveAction = {
+  type: "REMOVE_PRODUCT";
+  product: AddedCartProduct;
+};
+
+type CartAction = CartAddAction | CartRemoveAction;
 
 const initialState: CartState = {
   products: [],
@@ -25,13 +41,13 @@ const initialState: CartState = {
 const reducer = (state: CartState, action: CartAction) => {
   switch (action.type) {
     case "ADD_PRODUCT":
-      state.products.push(action.product);
+      state.products.push({...action.product, cartId: uuidv4()});
       break;
     case "REMOVE_PRODUCT":
-      state.products.filter(({ id }) => id !== action.product.id);
+      state.products = state.products.filter(({ cartId }) => {
+        return cartId !== action.product.cartId;
+      });
       break;
-    case "RESET":
-      return initialState;
     default:
       return state;
   }

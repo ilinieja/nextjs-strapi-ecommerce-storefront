@@ -1,3 +1,5 @@
+import CartProducts from "@/components/CartProducts/CartProducts";
+
 export default function Cart() {
-    return <div>cart</div>;
+    return <CartProducts className="pt-24" />
 }
