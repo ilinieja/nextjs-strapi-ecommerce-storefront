@@ -7,11 +7,13 @@ import clsx from "clsx";
 import { DateRange as DayPickerDateRange, DayPicker } from "react-day-picker";
 import { usePopper } from "react-popper";
 
+import { CompleteDateRange } from "@/lib/date";
 import defaultDatepickerStyles from "react-day-picker/dist/style.module.css";
 import styles from "./DatePicker.module.css";
 import SvgIconCalendar from "../icons/SvgIconCalendar";
 import { add, format } from "date-fns";
 import Button from "../Button/Button";
+
 const applyLocalStyle = (className: keyof typeof defaultDatepickerStyles) => ({
   [className]: clsx(defaultDatepickerStyles[className], styles[className]),
 });
@@ -94,19 +96,6 @@ const popoverPanelClasses = cva(
     },
   }
 );
-
-export function isCompleteDateRange(
-  dateRange: DayPickerDateRange | undefined
-): dateRange is CompleteDateRange {
-  return !!dateRange && !!dateRange.from && !!dateRange.to;
-}
-
-export type CompleteDateRange = {
-  from: Date;
-  to: Date;
-};
-
-export type PartialDateRange = DayPickerDateRange | undefined;
 
 export interface DatePickerProps {
   onDateRangeSelect: (dateRange: DayPickerDateRange | undefined) => void;

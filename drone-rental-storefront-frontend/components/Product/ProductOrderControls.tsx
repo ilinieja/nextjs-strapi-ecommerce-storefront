@@ -1,5 +1,6 @@
 "use client";
 import { useContext, useState } from "react";
+import { add } from "date-fns";
 
 import { Product } from "@/lib/types";
 import {
@@ -9,11 +10,8 @@ import {
 } from "@/context/cart.context";
 import Button from "@/components/Button/Button";
 import SvgCartIcon from "@/components/icons/SvgIconCartMini";
-import DatePicker, {
-  PartialDateRange,
-  isCompleteDateRange,
-} from "@/components/DatePicker/DatePicker";
-import { add } from "date-fns";
+import DatePicker from "@/components/DatePicker/DatePicker";
+import { PartialDateRange, isCompleteDateRange } from "@/lib/date";
 import ProductPrice from "./ProductPrice";
 
 export default function ProductOrderControls({

@@ -5,7 +5,7 @@ import { CartContext } from "../../context/cart.context";
 import Product from "../Product/Product";
 import clsx from "clsx";
 
-const CartProducts = ({ className }: { className: string }) => {
+const CartProducts = ({ className }: { className?: string }) => {
   const { state } = useContext(CartContext);
 
   return (
