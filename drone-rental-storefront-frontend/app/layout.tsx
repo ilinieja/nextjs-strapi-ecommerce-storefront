@@ -23,9 +23,7 @@ export default function RootLayout({
       <body className={clsx(inter.className, "h-full w-full flex flex-col justify-center items-center")}>
         <CartContextProvider>
           <Header className="sticky top-0 w-full"></Header>
-          <main className="w-full max-w-7xl">
-            {children}
-          </main>
+          {children}
         </CartContextProvider>
       </body>
     </html>
