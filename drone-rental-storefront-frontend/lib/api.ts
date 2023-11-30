@@ -2,7 +2,7 @@ import 'server-only'
 
 import logger from "@/lib/logger";
 
-import { Product } from "./types";
+import { Product, Location } from "./types";
 
 interface FetcherProps<T> {
   url: string;
@@ -48,6 +48,12 @@ const fetcher = async <T>({
   }
 };
 
+/**
+ * Fetches data from the CMS API.
+ *
+ * @param {FetcherProps<T>} props - The properties for the fetcher.
+ * @return {Promise<T>} A promise that resolves to the fetched data.
+ */
 const cmsFetcher = async <T>(props: FetcherProps<T>) => {
   const url = `${process.env.CMS_URL}/${props.url}`;
 
@@ -60,9 +66,27 @@ const cmsFetcher = async <T>(props: FetcherProps<T>) => {
   });
 };
 
+/**
+ * Retrieves a list of products from the CMS.
+ *
+ * @return {Promise<Product[]>} A promise that resolves to an array of products.
+ */
 export const getProducts = async () => {
   return cmsFetcher<Product[]>({
     url: "api/products?populate=mainImage",
+    method: "GET",
+    fallback: []
+  });
+};
+
+/**
+ * Retrieves a list of locations from the CMS API.
+ *
+ * @return {Promise<Location[]>} A promise that resolves to an array of Location objects.
+ */
+export const getLocations = async () => {
+  return cmsFetcher<Location[]>({
+    url: "api/locations?populate=products",
     method: "GET",
     fallback: []
   });
