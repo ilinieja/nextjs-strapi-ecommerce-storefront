@@ -10,6 +10,7 @@ import {
 } from "@/context/cart.context";
 import Button from "@/components/Button/Button";
 import SvgCartIcon from "@/components/icons/SvgIconCartMini";
+import SvgIconClose from "@/components/icons/SvgIconClose";
 import DatePicker from "@/components/DatePicker/DatePicker";
 import { PartialDateRange, isCompleteDateRange } from "@/lib/date";
 import ProductPrice from "./ProductPrice";
@@ -51,11 +52,11 @@ export default function ProductOrderControls({
 
   const button = isAddedCartProduct(product) ? (
     <Button onClick={handleRemoveFromCartClick}>
-      <SvgCartIcon />
+      <SvgIconClose />
       <span>Remove from cart</span>
     </Button>
   ) : (
-    <Button onClick={handleAddToCartClick}>
+    <Button intent="primary" onClick={handleAddToCartClick}>
       <SvgCartIcon />
       <span>Add to cart</span>
     </Button>

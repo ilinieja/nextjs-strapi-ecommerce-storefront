@@ -21,6 +21,16 @@ const buttonClasses = cva(
     variants: {
       intent: {
         primary: [
+          "bg-dark",
+          "text-light",
+          "hover:bg-light",
+          "hover:text-dark",
+          "dark:bg-light",
+          "dark:text-dark",
+          "dark:hover:bg-dark",
+          "dark:hover:text-light",
+        ],
+        secondary: [
           "bg-light",
           "text-dark",
           "hover:bg-dark",
@@ -33,7 +43,7 @@ const buttonClasses = cva(
       },
     },
     defaultVariants: {
-      intent: "primary",
+      intent: "secondary",
     },
   }
 );
