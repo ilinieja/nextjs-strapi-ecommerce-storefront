@@ -23,7 +23,7 @@ To start app the app locally in live-reload/debug mode you need to:
 - Create `.env` file in `drone-rental-storefront-frontend` and `drone-rental-storefront-cms` roots and copy respective `.env.example` contents into it.
 Each env var has description in the comment, change if needed (defaults are supposed to work fine though).
 
-- Import local data for development using [`npm run strapi import -- -f backups/local.tar.gz.enc`](https://docs.strapi.io/dev-docs/data-management/import)
+- Import local data for development using [`npm run strapi import -- -f backups/local.tar.gz.enc`](https://docs.strapi.io/dev-docs/data-management/import) (encryption key - `local`)
 
 - Run `npm run dev` from project root. Frontend will be available on port 3000 (default Next.js port) and CMS on port 1337 (default Strapi port).
 
